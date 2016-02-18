@@ -14,16 +14,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.springsource.festivities.model.Festivity;
 
+/**
+ * XML Utilities
+ * @author mlancheros
+ *
+ */
 public class XMLUtils {
 	
+	/**
+	 * Method that converts an XML into a Festivities object
+	 * @return List of festivities
+	 * @throws JAXBException
+	 */
 	public static List<Festivity>  loadInitialData() throws JAXBException{
 		Festivities festivities = new Festivities();
 		try {
-			System.out.println("Metodo archivo");
 			File file = new File("../webapps/festivities-0.1.0.BUILD-SNAPSHOT/WEB-INF/festivities.xml");
-			System.out.println("Nombre archivo: "+file.getName());
 			JAXBContext jaxbContext = JAXBContext.newInstance(Festivities.class);
-			System.out.println("Cargo+ archivo: "+file.getName());
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 			festivities = (Festivities) jaxbUnmarshaller.unmarshal(file);
 			return festivities.getFestivities();
@@ -34,6 +41,11 @@ public class XMLUtils {
 	
 	}
 	
+	/**
+	 * Class for unmarshall process.
+	 * @author mlancheros
+	 *
+	 */
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlRootElement(name = "festivities")
 	public static class Festivities{

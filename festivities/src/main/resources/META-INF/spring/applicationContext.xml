@@ -71,7 +71,10 @@
     <bean class="java.net.URI" id="dbUrl">
       <constructor-arg value="postgres://postgres:adminAdmin1@localhost:5432/Festivity"/>
     </bean>
-    
+  
     <!-- DAO -->
     <bean id="festivityDAO" class="com.springsource.festivities.dao.FestivityDAO"/>
+    
+    <!--  Services -->
+    <bean id="festivityController" class="com.springsource.festivities.services.FestivityController"/>
 </beans>
