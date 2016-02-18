@@ -38,8 +38,14 @@ public class FestivityController {
 	@Autowired
 	private FestivityDAO festivityDAO;
 	
+	/**
+	 * Get the resource bundle context
+	 */
 	ApplicationContext context = new ClassPathXmlApplicationContext("locale.xml");
 	
+	/**
+	 * Geographical region
+	 */
 	Locale locale = Locale.US;
 
 	

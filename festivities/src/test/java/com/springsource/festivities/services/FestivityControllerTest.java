@@ -8,6 +8,8 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -40,7 +42,8 @@ public class FestivityControllerTest {
         festivity.setPlace("Coleman's joint");
         festivity.setStartDate(new Date("02/16/2016"));
         festivity.setEndDate(new Date("02/17/2016"));
-        assertNotNull(festivityController.createFestivity(festivity));
+        ResponseEntity<String> responseEntity = festivityController.createFestivity(festivity);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 	
 	/**
@@ -49,8 +52,9 @@ public class FestivityControllerTest {
 	@Test
 	public void testGetAllFestivities() {
 		@SuppressWarnings("unchecked")
-		List<FestivityDateStringPojo> festivities = (List<FestivityDateStringPojo>)festivityController.getAllFestivities();
-		assertTrue(!festivities.isEmpty());
+		ResponseEntity<List<FestivityDateStringPojo>> responseEntity = 
+			(ResponseEntity<List<FestivityDateStringPojo>>)festivityController.getAllFestivities();
+		assertTrue(!responseEntity.getBody().isEmpty());
 	}
 	
 	/**
@@ -58,8 +62,10 @@ public class FestivityControllerTest {
 	 */
 	@Test
     public void testGetFestivityById(){
-		FestivityDateStringPojo festivity =  (FestivityDateStringPojo)festivityController.getFestivityByid(1L);
-    	assertNotNull(festivity);
+		@SuppressWarnings("unchecked")
+		ResponseEntity<FestivityDateStringPojo> responseEntity = 
+			(ResponseEntity<FestivityDateStringPojo>)festivityController.getFestivityByid(1L);
+    	assertNotNull(responseEntity.getBody());
     }
 	
 	/**
@@ -67,7 +73,10 @@ public class FestivityControllerTest {
 	 */
 	@Test
     public void testGetFestivityByName(){
-    	assertNotNull(festivityController.getFestivityByName("Edna's event"));
+		@SuppressWarnings("unchecked")
+		ResponseEntity<FestivityDateStringPojo> responseEntity = 
+			(ResponseEntity<FestivityDateStringPojo>)festivityController.getFestivityByName("Edna's event");
+    	assertNotNull(responseEntity.getBody());
     }
 	
 	/**
@@ -75,7 +84,10 @@ public class FestivityControllerTest {
 	 */
 	@Test
     public void testGetFestivityByPlace(){
-    	assertNotNull(festivityController.getFestivityByPlace("Coleman's joint"));
+		@SuppressWarnings("unchecked")
+		ResponseEntity<FestivityDateStringPojo> responseEntity = 
+			(ResponseEntity<FestivityDateStringPojo>)festivityController.getFestivityByPlace("Coleman's joint");
+    	assertNotNull(responseEntity.getBody());
     }
 	
 	
@@ -92,8 +104,10 @@ public class FestivityControllerTest {
     	newFestivity.setStartDate(new Date("02/16/2016"));
     	newFestivity.setEndDate(new Date("02/17/2016"));
     	festivityController.updateFestivity(newFestivity);
-    	FestivityDateStringPojo festivity = (FestivityDateStringPojo)festivityController.getFestivityByid(2L);
-    	assertEquals("testNameService", festivity.getName());
+    	@SuppressWarnings("unchecked")
+		ResponseEntity<FestivityDateStringPojo> responseEntity = 
+			(ResponseEntity<FestivityDateStringPojo>)festivityController.getFestivityByid(2L);
+    	assertEquals("testNameService", responseEntity.getBody().getName());
     }
 	
 	
